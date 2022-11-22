@@ -1,12 +1,14 @@
-import { enableProdMode } from '@angular/core';
-import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
+import { bootstrapApplication } from '@angular/platform-browser';
 
-import { AppModule } from './app/app.module';
-import { environment } from './environments/environment';
+import { HttpClientModule } from '@angular/common/http';
 
-if (environment.production) {
-  enableProdMode();
-}
+import { AppComponent } from './app/app.component';
+import { provideOAuthClient } from 'angular-oauth2-oidc';
+import { importProvidersFrom } from '@angular/core';
 
-platformBrowserDynamic().bootstrapModule(AppModule)
-  .catch(err => console.error(err));
+bootstrapApplication(AppComponent, {
+  providers: [
+    importProvidersFrom(HttpClientModule),
+    provideOAuthClient()
+  ]
+});
